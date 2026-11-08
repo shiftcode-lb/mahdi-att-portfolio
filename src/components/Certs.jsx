@@ -2,6 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { CERTS, FILTERS, asset } from '../data.js'
 import { Reveal, Words } from './ui.jsx'
 
+const preload = (slug) => {
+  const im = new Image()
+  im.src = asset(`certs/${slug}.webp`)
+}
+
 export default function Certs() {
   const [filter, setFilter] = useState('all')
   const [lb, setLb] = useState(null) // index of open certificate, or null
@@ -85,9 +90,15 @@ export default function Certs() {
                 className={`cert${filter !== 'all' && x.f !== filter ? ' hide' : ''}`}
                 delay={(i % 4) * 110}
                 onClick={() => setLb(i)}
+                onMouseEnter={() => preload(x.s)}
+                onFocus={() => preload(x.s)}
+                role="button"
+                tabIndex={x.f !== filter && filter !== 'all' ? -1 : 0}
+                aria-label={`View ${x.t} certificate full size`}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setLb(i))}
               >
                 <div className="img">
-                  <img loading="lazy" decoding="async" width="640" height="453" src={asset(`certs/${x.s}-sm.webp`)} alt={`${x.t} certificate`} />
+                  <img loading={i < 6 ? 'eager' : 'lazy'} fetchpriority={i < 3 ? 'high' : undefined} decoding="async" width="640" height="453" src={asset(`certs/${x.s}-sm.webp`)} alt={`${x.t} certificate`} />
                   <div className="zoom">View certificate</div>
                 </div>
                 <div className="info">
@@ -107,12 +118,12 @@ export default function Certs() {
         </div>
       </section>
 
-      <div className={`lb${c ? ' open' : ''}`} id="lb" onClick={(e) => e.target === e.currentTarget && setLb(null)}>
+      <div className={`lb${c ? ' open' : ''}`} id="lb" role="dialog" aria-modal="true" aria-label="Certificate viewer" aria-hidden={!c} onClick={(e) => e.target === e.currentTarget && setLb(null)}>
         <button className="x" id="lbx" aria-label="Close" onClick={() => setLb(null)}>✕</button>
         <button className="nv prev" id="lbp" aria-label="Previous" onClick={() => step(-1)}>‹</button>
         <button className="nv next" id="lbn" aria-label="Next" onClick={() => step(1)}>›</button>
         <figure>
-          <img id="lbi" src={c ? asset(`certs/${c.s}.webp`) : undefined} alt={c ? c.t : ''} />
+          <img id="lbi" decoding="async" src={c ? asset(`certs/${c.s}.webp`) : undefined} alt={c ? c.t : ''} />
           <figcaption>
             <span id="lbc">
               {c && (

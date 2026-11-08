@@ -32,9 +32,11 @@ export default function App() {
 
   return (
     <>
-      <div id="bar" ref={bar}></div>
+      <a href="#main" className="skip">Skip to content</a>
+      <div id="bar" ref={bar} aria-hidden="true"></div>
       <Nav />
       <Hero />
+      <main id="main">
       <Features />
       <About />
       <Experience />
@@ -42,6 +44,7 @@ export default function App() {
       <Gallery />
       <Certs />
       <Contact />
+      </main>
       <Footer />
     </>
   )

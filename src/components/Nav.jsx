@@ -30,7 +30,7 @@ export default function Nav() {
   }, [])
 
   return (
-    <nav id="nav" className={scrolled ? 'scrolled' : ''}>
+    <nav id="nav" aria-label="Main" className={scrolled ? 'scrolled' : ''}>
       <div className="wrap">
         <a href="#hero" className="logo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -40,7 +40,7 @@ export default function Nav() {
           </svg>
           Mahdi Atallah
         </a>
-        <button className="burger" id="burger" aria-label="Menu" onClick={() => setOpen((o) => !o)}>☰</button>
+        <button className="burger" id="burger" aria-label="Menu" aria-expanded={open} aria-controls="menu" onClick={() => setOpen((o) => !o)}>☰</button>
         <ul id="menu" className={open ? 'open' : ''} onClick={() => setOpen(false)}>
           {LINKS.map(([id, label]) => (
             <li key={id}>

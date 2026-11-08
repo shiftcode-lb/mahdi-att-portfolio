@@ -21,7 +21,7 @@ const FEATURES = [
 export function Features() {
   return (
     <section id="features">
-      <div className="wave" style={{ '--wc': 'var(--cream)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--cream)' }}></div>
       <div className="wrap center">
         <Reveal>
           <span className="eyebrow">What I do best</span>
@@ -45,7 +45,7 @@ export function Features() {
 export function About() {
   return (
     <section id="about">
-      <div className="wave" style={{ '--wc': 'var(--sand)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--sand)' }}></div>
       <div className="split">
         <Reveal className="txt">
           <span className="eyebrow">About me</span>
@@ -133,7 +133,7 @@ export function Skills() {
   ]
   return (
     <section id="skills">
-      <div className="wave" style={{ '--wc': 'var(--cream)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--cream)' }}></div>
       <div className="wrap">
         <Reveal>
           <span className="eyebrow">What I bring</span>
@@ -155,7 +155,7 @@ export function Skills() {
 export function Gallery() {
   return (
     <section id="gallery">
-      <div className="wave" style={{ '--wc': 'var(--sand)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--sand)' }}></div>
       <div className="wrap">
         <Reveal className="center">
           <span className="eyebrow">Drawn on a cup</span>
@@ -178,7 +178,7 @@ export function Gallery() {
 export function Contact() {
   return (
     <section id="contact">
-      <div className="wave" style={{ '--wc': 'var(--roast)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--roast)' }}></div>
       <div className="wrap">
         <Reveal className="cta-card">
           <span className="eyebrow">Let’s brew something great</span>
@@ -198,7 +198,7 @@ export function Contact() {
 export function Footer() {
   return (
     <footer>
-      <div className="wave" style={{ '--wc': 'var(--sand)' }}></div>
+      <div className="wave" aria-hidden="true" style={{ '--wc': 'var(--sand)' }}></div>
       <div className="wrap">
         <p>© <span id="yr">{new Date().getFullYear()}</span> Mahdi Atallah · Made with ☕ and a little foam</p>
         <p>Website designed &amp; developed by <b>Shift Code</b></p>

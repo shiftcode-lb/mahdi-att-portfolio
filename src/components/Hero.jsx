@@ -29,18 +29,20 @@ function useTyped() {
 export default function Hero() {
   const typed = useTyped()
   const vid = useRef(null)
-  const [on, setOn] = useState(false)
 
-  /* real hero video: shown only once the clip can play */
+  /* real hero video: poster shows instantly, then we make sure it plays (React doesn't always set `muted` before autoplay) */
   useEffect(() => {
     const v = vid.current
-    const ready = () => {
-      setOn(true)
-      v.play().catch(() => {})
+    if (!v) return
+    v.muted = true
+    const tryPlay = () => v.play().catch(() => {})
+    tryPlay()
+    v.addEventListener('canplay', tryPlay)
+    document.addEventListener('visibilitychange', tryPlay)
+    return () => {
+      v.removeEventListener('canplay', tryPlay)
+      document.removeEventListener('visibilitychange', tryPlay)
     }
-    if (v.readyState >= 3) ready()
-    else v.addEventListener('canplay', ready, { once: true })
-    return () => v.removeEventListener('canplay', ready)
   }, [])
 
   return (
@@ -59,10 +61,10 @@ export default function Hero() {
         </div>
         <div className="hero-visual">
           <div className="arch">
-            <video ref={vid} className={`hero-vid${on ? ' on' : ''}`} id="heroVid" muted loop playsInline autoPlay preload="auto" aria-hidden="true">
+            <video ref={vid} className="hero-vid" id="heroVid" poster={asset('hero-poster.webp')} muted loop playsInline autoPlay preload="auto" width="540" height="960" aria-label="Barista pouring milk into espresso to make latte art" role="img">
               <source src={asset('hero.mp4')} type="video/mp4" />
             </video>
-            <svg className="pour" viewBox="0 0 300 460" preserveAspectRatio="xMidYMid meet" aria-label="Coffee and milk being poured into a glass">
+            <svg className="pour" viewBox="0 0 300 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
               <defs>
                 <clipPath id="gc"><path d="M80 150 L99 400 Q100 411 112 411 L188 411 Q200 411 201 400 L220 150 Z" /></clipPath>
                 <linearGradient id="cof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#7a4424" /><stop offset="1" stopColor="#2a140a" /></linearGradient>
@@ -91,7 +93,7 @@ export default function Hero() {
               </g>
             </svg>
           </div>
-          <div className="mini"><img src={asset('photos/latte-heart-cup-sm.webp')} alt="Heart latte art" width="600" height="800" decoding="async" /></div>
+          <div className="mini"><img src={asset('photos/latte-heart-cup-sm.webp')} alt="Heart latte art in a paper cup" width="600" height="800" decoding="async" fetchpriority="high" /></div>
         </div>
       </div>
       <div className="scroll-hint"></div>
