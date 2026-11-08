@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import Certs from './components/Certs.jsx'
-import { Features, About, Experience, Skills, Gallery, Contact, Footer } from './components/Sections.jsx'
+import { Features, About, Experience, Skills, Gallery, Contact, Footer, WhatsAppFab } from './components/Sections.jsx'
 
 export default function App() {
   const bar = useRef(null)
@@ -46,6 +46,7 @@ export default function App() {
       <Contact />
       </main>
       <Footer />
+      <WhatsAppFab />
     </>
   )
 }
